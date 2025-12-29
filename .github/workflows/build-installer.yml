@@ -1,35 +1,39 @@
+#
+# build-installer.yml
+#
+
 name: Build macOS Installer ISO/DMG image
 
 on:
   workflow_dispatch:
     inputs:
       macos_version:
-        description: 'Select a macOS version to build'
+        description: "Select a macOS version to build"
         required: true
         type: choice
         options:
-          - 'Tahoe'
-          - 'Sequoia'
-          - 'Sonoma'
-          - 'Ventura'
-          - 'Monterey'
-          - 'Big Sur'
-          - 'Catalina'
-          - 'Mojave'
-          - 'High Sierra'
-          - 'Sierra'
-          - 'El Capitan'
-          - 'Yosemite'
-          - 'Mavericks'
-          - 'Mountain Lion'
-          - 'Lion'
+          - "Tahoe" # 26.2
+          - "Sequoia" # 15.7.3
+          - "Sonoma" # 14.8.3
+          - "Ventura" # 13.7.8
+          - "Monterey" # 12.7.6
+          - "Big Sur" # 11.7.10
+          - "Catalina" # 10.15.7
+          - "Mojave" # 10.14.6
+          - "High Sierra" # 10.13.6
+          - "Sierra" # 10.12.6
+          - "El Capitan" # 10.11.6
+          - "Yosemite" # 10.10.5
+          - "Mavericks" # 10.9.5
+          - "Mountain Lion" # 10.8.5
+          - "Lion" # 10.7.5
       image_format:
-        description: 'Select image format: iso for virtual machines, dmg for flash to USB drive'
+        description: "Select image format: iso for virtual machines, dmg for flash to USB drive"
         required: true
         type: choice
         options:
-          - 'iso'
-          - 'dmg'
+          - "iso"
+          - "dmg"
 
 jobs:
   build-macos-installer-image:
@@ -69,7 +73,7 @@ jobs:
         with:
           name: ${{ steps.create_image.outputs.image_name }}
           path: ./*.iso
-          compression-level: 0
+          compression-level: 5
           retention-days: 7
 
       - name: Upload DMG artifact
@@ -78,7 +82,7 @@ jobs:
         with:
           name: ${{ steps.create_image.outputs.image_name }}
           path: ./*.dmg.img
-          compression-level: 0
+          compression-level: 5
           retention-days: 7
 
       - name: Summary
